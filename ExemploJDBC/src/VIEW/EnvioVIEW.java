@@ -26,7 +26,6 @@ public class EnvioVIEW extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        JLabel1.setHorizontalTextPosition(SwingConstants.CENTER);
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PARABÉNS! VOCÊ LOGOU!");

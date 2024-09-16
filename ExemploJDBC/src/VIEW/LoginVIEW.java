@@ -98,11 +98,11 @@ public class LoginVIEW extends javax.swing.JFrame {
             
                 if (rsUsuarioDAO.next()) {
                     // USUÁRIO E SENHA ESTÃO NO BANCO - TELA APARECE
-                    
+
+                    dispose();
+
                     EnvioVIEW objEnvioVIEW = new EnvioVIEW();
                     objEnvioVIEW.setVisible(true);
-                    
-                    dispose();
                 }
                 
                 else {

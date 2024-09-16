@@ -15,6 +15,7 @@ public class UsuarioDTO {
     /* ID */
     
     public int getID() {
+        this.ID = ID;
         return ID;
     }
     
@@ -25,6 +26,7 @@ public class UsuarioDTO {
     /* NOME */
     
     public String getNome() {
+        this.Nome = Nome;
         return Nome;
     }
     
@@ -35,6 +37,7 @@ public class UsuarioDTO {
     /* SENHA */
     
     public String getSenha() {
+        this.Senha = Senha;
         return Senha;
     }
     

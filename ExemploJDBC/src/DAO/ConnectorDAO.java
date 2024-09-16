@@ -8,20 +8,18 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 
 public class ConnectorDAO {
     
     public Connection conectorDB() {  
-        Connection conn = null; 
-        
+        Connection conn = null;
         try {
-            String url = "jdbc:mysql//localhost:3306/db"; //SEM STRING DE USER E PASSWORD: ?user=root&password=
+            String url = "jdbc:mysql://localhost:3306/db"; //SEM STRING DE USER E PASSWORD: ?user=root&password=
             String user = "root";
             String password = "1234";
-            
-            conn = DriverManager.getConnection(url);
+
+            conn = DriverManager.getConnection(url, user, password);
         }
         
         catch (SQLException erro){

@@ -11,18 +11,19 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioDAO {
     
-    Connection conn;
+    Connection conn = null;
     
     public ResultSet autenticacaoUsuario(UsuarioDTO classUsuarioDTO) {
         conn = new ConnectorDAO().conectorDB();
         
         try {
-            String sql = "SELECT * from UsuarioTabela WHERE Nome_Usuario = ? AND Senha_Usuario = ? ";
-            
+            String sql = "SELECT * from UsuarioTabela WHERE Nome_Usuario = ? AND Senha_Usuario = ?;";
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, classUsuarioDTO.getNome());
             stmt.setString(2, classUsuarioDTO.getSenha());
-            
+            stmt.execute();
+
             ResultSet rs = stmt.executeQuery();
             return rs;
         }
