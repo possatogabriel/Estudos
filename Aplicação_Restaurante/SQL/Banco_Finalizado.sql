@@ -7,13 +7,13 @@ USE Restaurante;
 -- Tabela de Clientes
 CREATE TABLE IF NOT EXISTS Clientes( 
 	ID_cliente int(8) AUTO_INCREMENT, 
-	CPF varchar(11) not null, 
+	CPF varchar(14) not null, 
 	Nome varchar(255),
-	Sexo varchar(255),
-	Idade varchar(3),
+	Sexo enum('M','F'),
+	Idade int(3),
 	Endereco varchar(255), 
 	Email varchar(255), 
-	Telefone varchar(12),
+	Telefone varchar(15),
 	Data_cadastro datetime, 
 	PRIMARY KEY (ID_cliente) 
 );
@@ -23,22 +23,22 @@ CREATE TABLE IF NOT EXISTS Filiais(
 	ID_filial int(3) AUTO_INCREMENT, 
 	Endereco varchar(255), 
 	Email varchar(255), 
-	Telefone varchar(12), 
+	Telefone varchar(15), 
 	Quant_mesas int(3), 
-	Avaliacao decimal(4,2), 
+	Avaliacao varchar(5), 
 	PRIMARY KEY (ID_filial) 
 );
 
 -- Tabela de Funcionários
 CREATE TABLE IF NOT EXISTS Funcionarios( 
 	ID_func int(5) AUTO_INCREMENT, 
-	CPF varchar(11) not null, 
+	CPF varchar(14) not null, 
 	Nome varchar(255),
-	Sexo varchar(255),
+	Sexo enum ('F','M'),
 	Idade varchar(3),
 	Endereco varchar(255), 
 	Email varchar(255), 
-	Telefone varchar(12), 
+	Telefone varchar(15), 
 	ID_filial int(3),
 	Cargo varchar(255),
 	Data_contatacao datetime,
@@ -63,11 +63,11 @@ CREATE TABLE IF NOT EXISTS Reservas(
 CREATE TABLE IF NOT EXISTS Fornecedores(
 	Nome varchar(255),
 	ID_fornecedor int(5) AUTO_INCREMENT, 
-	CNPJ varchar(14),
+	CNPJ varchar(18),
 	Tipo_material varchar(255),
 	Email varchar(255), 
-	Telefone varchar(12), 
-	Valor_material decimal(8,2), 
+	Telefone varchar(15), 
+	Valor_material varchar(13), 
 	PRIMARY KEY (ID_fornecedor) 
 ); 
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS Pratos(
 	ID_prato int(3) AUTO_INCREMENT,
 	Nome varchar(255),
 	Descricao varchar(255),
-	Valor decimal(5,2),
+	Valor varchar(9), 
 	PRIMARY KEY (ID_prato) 
 ); 
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS Bebidas(
 	ID_bebida int(3) AUTO_INCREMENT,
 	Nome varchar(255),
 	Descricao varchar(255),
-	Valor decimal (4,2), 
+	Valor varchar(8), 
 	PRIMARY KEY (ID_bebida) 
 ); 
 
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS Bebidas(
 CREATE TABLE IF NOT EXISTS Ingredientes(
 	ID_ingrediente int(3) AUTO_INCREMENT,
 	Nome varchar(255),
-	Unidade_medida Varchar(255),
+	Unidade_Medida Varchar(255),
 	ID_prato int(3),
 	ID_bebida int(3),
 	PRIMARY KEY (ID_ingrediente),
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS Pedidos(
 	ID_cliente int(8), 
 	ID_prato int(2), 
 	ID_bebida int(3), 
-	Valor decimal(4,2),
+	Valor varchar (8),
 	Tipo_pagamento varchar(255),
 	Endereco varchar(255),
 	Data_pedido datetime,
@@ -140,57 +140,57 @@ CREATE TABLE IF NOT EXISTS Entregas(
 
 -- Inserir dados na tabela Clientes
 INSERT INTO Clientes (CPF, Nome, Sexo, Idade, Endereco, Email, Telefone, Data_cadastro) VALUES 
-('12345678901', 'Maria Silva', 'Feminino', '25', 'Rua A, 123', 'maria.silva@gmail.com', '9876543210', '2023-01-01 10:00:00'),
-('23456789012', 'João Souza', 'Masculino', '30', 'Rua B, 456', 'joao.souza@gmail.com', '9876543211', '2023-01-02 11:00:00'),
-('34567890123', 'Ana Pereira', 'Feminino', '22', 'Rua C, 789', 'ana.pereira@gmail.com', '9876543212', '2023-01-03 12:00:00'),
-('45678901234', 'Carlos Santos', 'Masculino', '28', 'Rua D, 101', 'carlos.santos@gmail.com', '9876543213', '2023-01-04 13:00:00'),
-('56789012345', 'Julia Oliveira', 'Feminino', '26', 'Rua E, 202', 'julia.oliveira@gmail.com', '9876543214', '2023-01-05 14:00:00'),
-('67890123456', 'Pedro Lima', 'Masculino', '29', 'Rua F, 303', 'pedro.lima@gmail.com', '9876543215', '2023-01-06 15:00:00'),
-('78901234567', 'Mariana Costa', 'Feminino', '27', 'Rua G, 404', 'mariana.costa@gmail.com', '9876543216', '2023-01-07 16:00:00'),
-('89012345678', 'Lucas Almeida', 'Masculino', '24', 'Rua H, 505', 'lucas.almeida@gmail.com', '9876543217', '2023-01-08 17:00:00'),
-('90123456789', 'Larissa Carvalho', 'Feminino', '23', 'Rua I, 606', 'larissa.carvalho@gmail.com', '9876543218', '2023-01-09 18:00:00'),
-('01234567890', 'Ricardo Araújo', 'Masculino', '31', 'Rua J, 707', 'ricardo.araujo@gmail.com', '9876543219', '2023-01-10 19:00:00'),
-('11234567890', 'Sofia Ribeiro', 'Feminino', '25', 'Rua K, 808', 'sofia.ribeiro@gmail.com', '9876543220', '2023-01-11 20:00:00'),
-('21234567890', 'Felipe Martins', 'Masculino', '30', 'Rua L, 909', 'felipe.martins@gmail.com', '9876543221', '2023-01-12 21:00:00'),
-('31234567890', 'Bruna Mendes', 'Feminino', '22', 'Rua M, 101', 'bruna.mendes@gmail.com', '9876543222', '2023-01-13 22:00:00'),
-('41234567890', 'Gabriel Lima', 'Masculino', '28', 'Rua N, 202', 'gabriel.lima@gmail.com', '9876543223', '2023-01-14 23:00:00'),
-('51234567890', 'Carolina Rocha', 'Feminino', '26', 'Rua O, 303', 'carolina.rocha@gmail.com', '9876543224', '2023-01-15 10:00:00');
+('123.456.789-01', 'Maria Silva', 'F', '25', 'Rua A, 123', 'maria.silva@gmail.com', '(98) 76543-2100', '2023-01-01 10:00:00'),
+('234.567.890-12', 'João Souza', 'M', '30', 'Rua B, 456', 'joao.souza@gmail.com', '(98) 76543-2110', '2023-01-02 11:00:00'),
+('345.678.901-23', 'Ana Pereira', 'F', '22', 'Rua C, 789', 'ana.pereira@gmail.com', '(98) 76543-2120', '2023-01-03 12:00:00'),
+('456.789.012-34', 'Carlos Santos', 'M', '28', 'Rua D, 101', 'carlos.santos@gmail.com', '(98) 76543-2130', '2023-01-04 13:00:00'),
+('567.890.123-45', 'Julia Oliveira', 'F', '26', 'Rua E, 202', 'julia.oliveira@gmail.com', '(98) 76543-2140', '2023-01-05 14:00:00'),
+('678.901.234-56', 'Pedro Lima', 'M', '29', 'Rua F, 303', 'pedro.lima@gmail.com', '(98) 76543-2150', '2023-01-06 15:00:00'),
+('789.012.345-67', 'Mariana Costa', 'F', '27', 'Rua G, 404', 'mariana.costa@gmail.com', '(98) 76543-2160', '2023-01-07 16:00:00'),
+('890.123.456-78', 'Lucas Almeida', 'M', '24', 'Rua H, 505', 'lucas.almeida@gmail.com', '(98) 76543-2170', '2023-01-08 17:00:00'),
+('901.234.567-89', 'Larissa Carvalho', 'F', '23', 'Rua I, 606', 'larissa.carvalho@gmail.com', '(98) 76543-2180', '2023-01-09 18:00:00'),
+('012.345.678-90', 'Ricardo Araújo', 'M', '31', 'Rua J, 707', 'ricardo.araujo@gmail.com', '(98) 76543-2190', '2023-01-10 19:00:00'),
+('112.345.678-90', 'Sofia Ribeiro', 'F', '25', 'Rua K, 808', 'sofia.ribeiro@gmail.com', '(98) 76543-2200', '2023-01-11 20:00:00'),
+('212.345.678-90', 'Felipe Martins', 'M', '30', 'Rua L, 909', 'felipe.martins@gmail.com', '(98) 76543-2210', '2023-01-12 21:00:00'),
+('312.345.678-90', 'Bruna Mendes', 'F', '22', 'Rua M, 101', 'bruna.mendes@gmail.com', '(98) 76543-2220', '2023-01-13 22:00:00'),
+('412.345.678-90', 'Gabriel Lima', 'M', '28', 'Rua N, 202', 'gabriel.lima@gmail.com', '(98) 76543-2230', '2023-01-14 23:00:00'),
+('512.345.678-90', 'Carolina Rocha', 'F', '26', 'Rua O, 303', 'carolina.rocha@gmail.com', '(98) 76543-2240', '2023-01-15 10:00:00');
 
 -- Inserir dados na tabela Filiais
 INSERT INTO Filiais (Endereco, Email, Telefone, Quant_mesas, Avaliacao) VALUES 
-('Avenida Principal, 100', 'filial1@restaurante.com', '3216549870', 20, 4.5),
-('Rua das Flores, 200', 'filial2@restaurante.com', '3216549871', 15, 4.2),
-('Avenida Brasil, 300', 'filial3@restaurante.com', '3216549872', 25, 4.8),
-('Rua das Árvores, 400', 'filial4@restaurante.com', '3216549873', 18, 4.0),
-('Avenida Central, 500', 'filial5@restaurante.com', '3216549874', 30, 4.7),
-('Rua do Comércio, 600', 'filial6@restaurante.com', '3216549875', 22, 4.3),
-('Avenida Rio, 700', 'filial7@restaurante.com', '3216549876', 28, 4.6),
-('Rua do Sol, 800', 'filial8@restaurante.com', '3216549877', 16, 4.1),
-('Avenida Mar, 900', 'filial9@restaurante.com', '3216549878', 20, 4.4),
-('Rua da Paz, 1000', 'filial10@restaurante.com', '3216549879', 25, 4.9),
-('Avenida Esperança, 1100', 'filial11@restaurante.com', '3216549880', 15, 4.2),
-('Rua da Alegria, 1200', 'filial12@restaurante.com', '3216549881', 18, 4.0),
-('Avenida Felicidade, 1300', 'filial13@restaurante.com', '3216549882', 30, 4.7),
-('Rua da Harmonia, 1400', 'filial14@restaurante.com', '3216549883', 22, 4.3),
-('Avenida Serenidade, 1500', 'filial15@restaurante.com', '3216549884', 28, 4.6);
+('Avenida Principal, 100', 'filial1@restaurante.com', '(32) 16549-8700', 20, 4.5),
+('Rua das Flores, 200', 'filial2@restaurante.com', '(32) 16549-8710', 15, 4.2),
+('Avenida Brasil, 300', 'filial3@restaurante.com', '(32) 16549-8720', 25, 4.8),
+('Rua das Árvores, 400', 'filial4@restaurante.com', '(32) 16549-8730', 18, 4.0),
+('Avenida Central, 500', 'filial5@restaurante.com', '(32) 16549-8740', 30, 4.7),
+('Rua do Comércio, 600', 'filial6@restaurante.com', '(32) 16549-8750', 22, 4.3),
+('Avenida Rio, 700', 'filial7@restaurante.com', '(32) 16549-8760', 28, 4.6),
+('Rua do Sol, 800', 'filial8@restaurante.com', '(32) 16549-8770', 16, 4.1),
+('Avenida Mar, 900', 'filial9@restaurante.com', '(32) 16549-8780', 20, 4.4),
+('Rua da Paz, 1000', 'filial10@restaurante.com', '(32) 16549-8790', 25, 4.9),
+('Avenida Esperança, 1100', 'filial11@restaurante.com', '(32) 16549-8800', 15, 4.2),
+('Rua da Alegria, 1200', 'filial12@restaurante.com', '(32) 16549-8810', 18, 4.0),
+('Avenida Felicidade, 1300', 'filial13@restaurante.com', '(32) 16549-8820', 30, 4.7),
+('Rua da Harmonia, 1400', 'filial14@restaurante.com', '(32) 16549-8830', 22, 4.3),
+('Avenida Serenidade, 1500', 'filial15@restaurante.com', '(32) 16549-8840', 28, 4.6);
 
 -- Inserir dados na tabela Funcionarios
 INSERT INTO Funcionarios (CPF, Nome, Sexo, Idade, Endereco, Email, Telefone, ID_filial, Cargo, Data_contatacao) VALUES 
-('09876543210', 'Fernando Gonçalves', 'Masculino', '35', 'Rua P, 404', 'fernando.goncalves@restaurante.com', '9876543215', 1, 'Garçom', '2023-02-01 10:00:00'),
-('98765432109', 'Bianca Ferreira', 'Feminino', '28', 'Rua Q, 505', 'bianca.ferreira@restaurante.com', '9876543216', 2, 'Cozinheira', '2023-02-02 11:00:00'),
-('87654321098', 'Lucas Barbosa', 'Masculino', '32', 'Rua R, 606', 'lucas.barbosa@restaurante.com', '9876543217', 3, 'Gerente', '2023-02-03 12:00:00'),
-('76543210987', 'Carla Lima', 'Feminino', '27', 'Rua S, 707', 'carla.lima@restaurante.com', '9876543218', 4, 'Atendente', '2023-02-04 13:00:00'),
-('65432109876', 'Marcos Silva', 'Masculino', '30', 'Rua T, 808', 'marcos.silva@restaurante.com', '9876543219', 5, 'Chef de Cozinha', '2023-02-05 14:00:00'),
-('54321098765', 'Renata Souza', 'Feminino', '26', 'Rua U, 909', 'renata.souza@restaurante.com', '9876543220', 6, 'Garçonete', '2023-02-06 15:00:00'),
-('43210987654', 'João Vieira', 'Masculino', '29', 'Rua V, 101', 'joao.vieira@restaurante.com', '9876543221', 7, 'Auxiliar de Cozinha', '2023-02-07 16:00:00'),
-('32109876543', 'Mariana Araújo', 'Feminino', '25', 'Rua W, 202', 'mariana.araujo@restaurante.com', '9876543222', 8, 'Recepcionista', '2023-02-08 17:00:00'),
-('21098765432', 'Rafael Carvalho', 'Masculino', '31', 'Rua X, 303', 'rafael.carvalho@restaurante.com', '9876543223', 9, 'Gerente de Filial', '2023-02-09 18:00:00'),
-('10987654321', 'Patrícia Nunes', 'Feminino', '33', 'Rua Y, 404', 'patricia.nunes@restaurante.com', '9876543224', 10, 'Cozinheira', '2023-02-10 19:00:00'),
-('09876543211', 'Ricardo Silva', 'Masculino', '30', 'Rua Z, 505', 'ricardo.silva@restaurante.com', '9876543225', 11, 'Garçom', '2023-02-11 20:00:00'),
-('87654321087', 'Juliana Lima', 'Feminino', '28', 'Rua AA, 606', 'juliana.lima@restaurante.com', '9876543226', 12, 'Garçonete', '2023-02-12 21:00:00'),
-('65432109865', 'Rodrigo Martins', 'Masculino', '29', 'Rua BB, 707', 'rodrigo.martins@restaurante.com', '9876543227', 13, 'Atendente', '2023-02-13 22:00:00'),
-('43210987643', 'Camila Oliveira', 'Feminino', '27', 'Rua CC, 808', 'camila.oliveira@restaurante.com', '9876543228', 14, 'Auxiliar de Cozinha', '2023-02-14 23:00:00'),
-('21098765421', 'André Gomes', 'Masculino', '32', 'Rua DD, 909', 'andre.gomes@restaurante.com', '9876543229', 15, 'Chef de Cozinha', '2023-02-15 10:00:00');
+('098.765.432-10', 'Fernando Gonçalves', 'M', '35', 'Rua P, 404', 'fernando.goncalves@restaurante.com', '(98) 76543-2150', 1, 'Garçom', '2023-02-01 10:00:00'),
+('987.654.321-09', 'Bianca Ferreira', 'F', '28', 'Rua Q, 505', 'bianca.ferreira@restaurante.com', '(98) 76543-2160', 2, 'Cozinheira', '2023-02-02 11:00:00'),
+('876.543.210-98', 'Lucas Barbosa', 'M', '32', 'Rua R, 606', 'lucas.barbosa@restaurante.com', '(98) 76543-2170', 3, 'Gerente', '2023-02-03 12:00:00'),
+('765.432.109-87', 'Carla Lima', 'F', '27', 'Rua S, 707', 'carla.lima@restaurante.com', '(98) 76543-2180', 4, 'Atendente', '2023-02-04 13:00:00'),
+('654.321.098-76', 'Marcos Silva', 'M', '30', 'Rua T, 808', 'marcos.silva@restaurante.com', '(98) 76543-2190', 5, 'Chef de Cozinha', '2023-02-05 14:00:00'),
+('543.210.987-65', 'Renata Souza', 'F', '26', 'Rua U, 909', 'renata.souza@restaurante.com', '(98) 76543-2200', 6, 'Garçonete', '2023-02-06 15:00:00'),
+('432.109.876-54', 'João Vieira', 'M', '29', 'Rua V, 101', 'joao.vieira@restaurante.com', '(98) 76543-2210', 7, 'Auxiliar de Cozinha', '2023-02-07 16:00:00'),
+('321.098.765-43', 'Mariana Araújo', 'F', '25', 'Rua W, 202', 'mariana.araujo@restaurante.com', '(98) 76543-2220', 8, 'Recepcionista', '2023-02-08 17:00:00'),
+('210.987.654-32', 'Rafael Carvalho', 'M', '31', 'Rua X, 303', 'rafael.carvalho@restaurante.com', '(98) 76543-2230', 9, 'Gerente de Filial', '2023-02-09 18:00:00'),
+('109.876.543-21', 'Patrícia Nunes', 'F', '33', 'Rua Y, 404', 'patricia.nunes@restaurante.com', '(98) 76543-2240', 10, 'Cozinheira', '2023-02-10 19:00:00'),
+('098.765.432-11', 'Ricardo Silva', 'M', '30', 'Rua Z, 505', 'ricardo.silva@restaurante.com', '(98) 76543-2250', 11, 'Garçom', '2023-02-11 20:00:00'),
+('876.543.210-87', 'Juliana Lima', 'F', '28', 'Rua AA, 606', 'juliana.lima@restaurante.com', '(98) 76543-2260', 12, 'Garçonete', '2023-02-12 21:00:00'),
+('654.321.098-65', 'Rodrigo Martins', 'M', '29', 'Rua BB, 707', 'rodrigo.martins@restaurante.com', '(98) 76543-2270', 13, 'Atendente', '2023-02-13 22:00:00'),
+('432.109.876-43', 'Camila Oliveira', 'F', '27', 'Rua CC, 808', 'camila.oliveira@restaurante.com', '(98) 76543-2280', 14, 'Auxiliar de Cozinha', '2023-02-14 23:00:00'),
+('210.987.654-21', 'André Gomes', 'M', '32', 'Rua DD, 909', 'andre.gomes@restaurante.com', '(98) 76543-2290', 15, 'Chef de Cozinha', '2023-02-15 10:00:00');
 
 -- Inserir dados na tabela Reservas
 INSERT INTO Reservas (Data_reserva, ID_cliente, Mesa, ID_filial, Capacidade) VALUES 
@@ -212,21 +212,21 @@ INSERT INTO Reservas (Data_reserva, ID_cliente, Mesa, ID_filial, Capacidade) VAL
 
 -- Inserir dados na tabela Fornecedores
 INSERT INTO Fornecedores (Nome, CNPJ, Tipo_material, Email, Telefone, Valor_material) VALUES 
-('Fornecedor A', '12345678000101', 'Legumes', 'fornecedora@gmail.com', '3216549870', 500.00),
-('Fornecedor B', '23456789000112', 'Carnes', 'fornecedorb@gmail.com', '3216549871', 800.00),
-('Fornecedor C', '34567890000123', 'Bebidas', 'fornecedorc@gmail.com', '3216549872', 300.00),
-('Fornecedor D', '45678901000134', 'Laticínios', 'fornecedord@gmail.com', '3216549873', 400.00),
-('Fornecedor E', '56789012000145', 'Grãos', 'fornecedore@gmail.com', '3216549874', 200.00),
-('Fornecedor F', '67890123000156', 'Especiarias', 'fornecedorf@gmail.com', '3216549875', 150.00),
-('Fornecedor G', '78901234000167', 'Verduras', 'fornecedorg@gmail.com', '3216549876', 450.00),
-('Fornecedor H', '89012345000178', 'Massas', 'fornecedorh@gmail.com', '3216549877', 350.00),
-('Fornecedor I', '90123456000189', 'Frutas', 'fornecedori@gmail.com', '3216549878', 600.00),
-('Fornecedor J', '01234567000190', 'Pães', 'fornecedorj@gmail.com', '3216549879', 250.00),
-('Fornecedor K', '12345678000191', 'Bebidas Alcoólicas', 'fornecedork@gmail.com', '3216549880', 700.00),
-('Fornecedor L', '23456789000192', 'Doces', 'fornecedorl@gmail.com', '3216549881', 100.00),
-('Fornecedor M', '34567890000193', 'Frutos do Mar', 'fornecedorm@gmail.com', '3216549882', 900.00),
-('Fornecedor N', '45678901000194', 'Temperos', 'fornecedorn@gmail.com', '3216549883', 50.00),
-('Fornecedor O', '56789012000195', 'Bebidas Não Alcoólicas', 'fornecedoro@gmail.com', '3216549884', 300.00);
+('Fornecedor A', '12.345.678/0001-01', 'Legumes', 'fornecedora@gmail.com', '(32) 16549-8700', 'R$ 500.00'),
+('Fornecedor B', '23.456.789/0001-12', 'Carnes', 'fornecedorb@gmail.com', '(32) 16549-8710', 'R$ 800.00'),
+('Fornecedor C', '34.567.890/0001-23', 'Bebidas', 'fornecedorc@gmail.com', '(32) 16549-8720', 'R$ 300.00'),
+('Fornecedor D', '45.678.901/0001-34', 'Laticínios', 'fornecedord@gmail.com', '(32) 16549-8730', 'R$ 400.00'),
+('Fornecedor E', '56.789.012/0001-45', 'Grãos', 'fornecedore@gmail.com', '(32) 16549-8740', 'R$ 200.00'),
+('Fornecedor F', '67.890.123/0001-56', 'Especiarias', 'fornecedorf@gmail.com', '(32) 16549-8750', 'R$ 150.00'),
+('Fornecedor G', '78.901.234/0001-67', 'Verduras', 'fornecedorg@gmail.com', '(32) 16549-8760', 'R$ 450.00'),
+('Fornecedor H', '89.012.345/0001-78', 'Massas', 'fornecedorh@gmail.com', '(32) 16549-8770', 'R$ 350.00'),
+('Fornecedor I', '90.123.456/0001-89', 'Frutas', 'fornecedori@gmail.com', '(32) 16549-8780', 'R$ 600.00'),
+('Fornecedor J', '01.234.567/0001-90', 'Pães', 'fornecedorj@gmail.com', '(32) 16549-8790', 'R$ 250.00'),
+('Fornecedor K', '12.345.678/0001-91', 'Bebidas Alcoólicas', 'fornecedork@gmail.com', '(32) 16549-8800', 'R$ 700.00'),
+('Fornecedor L', '23.456.789/0001-92', 'Doces', 'fornecedorl@gmail.com', '(32) 16549-8810', 'R$ 100.00'),
+('Fornecedor M', '34.567.890/0001-93', 'Frutos do Mar', 'fornecedorm@gmail.com', '(32) 16549-8820', 'R$ 900.00'),
+('Fornecedor N', '45.678.901/0001-94', 'Temperos', 'fornecedorn@gmail.com', '(32) 16549-8830', 'R$ 50.00'),
+('Fornecedor O', '56.789.012/0001-95', 'Bebidas Não Alcoólicas', 'fornecedoro@gmail.com', '(32) 16549-8840', 'R$ 300.00');
 
 -- Inserir dados na tabela Estoque
 INSERT INTO Estoque (ID_fornecedor, Quantidade, ID_filial) VALUES 
@@ -248,42 +248,42 @@ INSERT INTO Estoque (ID_fornecedor, Quantidade, ID_filial) VALUES
 
 -- Inserir dados na tabela Pratos
 INSERT INTO Pratos (Nome, Descricao, Valor) VALUES 
-('Bife à Parmegiana', 'Bife empanado com molho de tomate e queijo', 25.90),
-('Lasanha de Frango', 'Lasanha recheada com frango desfiado', 22.50),
-('Spaghetti Carbonara', 'Macarrão com molho à base de ovos e bacon', 20.00),
-('Salmão Grelhado', 'Filé de salmão grelhado com ervas', 30.90),
-('Frango à Milanesa', 'Filé de frango empanado e frito', 18.90),
-('Feijoada', 'Prato típico brasileiro com feijão preto e carnes', 35.00),
-('Arroz de Polvo', 'Arroz com pedaços de polvo e temperos', 28.50),
-('Risoto de Camarão', 'Risoto cremoso com camarão', 32.00),
-('Filé Mignon', 'Filé de carne bovina grelhado', 40.00),
-('Moqueca de Peixe', 'Peixe cozido com leite de coco e dendê', 27.50),
-('Escondidinho de Carne', 'Carne desfiada coberta com purê de batata', 19.90),
-('Picanha na Brasa', 'Picanha assada na churrasqueira', 45.00),
-('Camarão à Baiana', 'Camarão cozido com temperos baianos', 33.90),
-('Ravioli de Ricota', 'Massa recheada com ricota e espinafre', 21.50),
-('Pizza Marguerita', 'Pizza com molho de tomate, queijo e manjericão', 29.00);
+('Bife à Parmegiana', 'Bife empanado com molho de tomate e queijo', 'R$ 25.90'),
+('Lasanha de Frango', 'Lasanha recheada com frango desfiado', 'R$ 22.50'),
+('Spaghetti Carbonara', 'Macarrão com molho à base de ovos e bacon', 'R$ 20.00'),
+('Salmão Grelhado', 'Filé de salmão grelhado com ervas', 'R$ 30.90'),
+('Frango à Milanesa', 'Filé de frango empanado e frito', 'R$ 18.90'),
+('Feijoada', 'Prato típico brasileiro com feijão preto e carnes', 'R$ 35.00'),
+('Arroz de Polvo', 'Arroz com pedaços de polvo e temperos', 'R$ 28.50'),
+('Risoto de Camarão', 'Risoto cremoso com camarão', 'R$ 32.00'),
+('Filé Mignon', 'Filé de carne bovina grelhado', 'R$ 40.00'),
+('Moqueca de Peixe', 'Peixe cozido com leite de coco e dendê', 'R$ 27.50'),
+('Escondidinho de Carne', 'Carne desfiada coberta com purê de batata', 'R$ 19.90'),
+('Picanha na Brasa', 'Picanha assada na churrasqueira', 'R$ 45.00'),
+('Camarão à Baiana', 'Camarão cozido com temperos baianos', 'R$ 33.90'),
+('Ravioli de Ricota', 'Massa recheada com ricota e espinafre', 'R$ 21.50'),
+('Pizza Marguerita', 'Pizza com molho de tomate, queijo e manjericão', 'R$ 29.00');
 
 -- Inserir dados na tabela Bebidas
 INSERT INTO Bebidas (Nome, Descricao, Valor) VALUES 
-('Refrigerante', 'Bebida gaseificada', 5.00),
-('Suco de Laranja', 'Suco natural de laranja', 7.00),
-('Água Mineral', 'Água engarrafada sem gás', 3.00),
-('Cerveja', 'Bebida alcoólica fermentada', 8.00),
-('Vinho Tinto', 'Vinho produzido a partir de uvas tintas', 20.00),
-('Caipirinha', 'Coquetel de cachaça com limão', 15.00),
-('Whisky', 'Bebida alcoólica destilada de grãos', 25.00),
-('Café Expresso', 'Café feito sob pressão', 4.00),
-('Chá Gelado', 'Bebida refrescante de chá', 6.00),
-('Milkshake', 'Bebida gelada à base de sorvete', 10.00),
-('Energético', 'Bebida estimulante', 12.00),
-('Limonada', 'Suco de limão com água e açúcar', 5.00),
-('Mojito', 'Coquetel de rum com hortelã e limão', 18.00),
-('Gin Tônica', 'Coquetel de gin com água tônica', 20.00),
-('Vodka', 'Bebida alcoólica destilada', 22.00);
+('Refrigerante', 'Bebida gaseificada', 'R$ 5.00'),
+('Suco de Laranja', 'Suco natural de laranja', 'R$ 7.00'),
+('Água Mineral', 'Água engarrafada sem gás', 'R$ 3.00'),
+('Cerveja', 'Bebida alcoólica fermentada', 'R$ 8.00'),
+('Vinho Tinto', 'Vinho produzido a partir de uvas tintas', 'R$ 20.00'),
+('Caipirinha', 'Coquetel de cachaça com limão', 'R$ 15.00'),
+('Whisky', 'Bebida alcoólica destilada de grãos', 'R$ 25.00'),
+('Café Expresso', 'Café feito sob pressão', 'R$ 4.00'),
+('Chá Gelado', 'Bebida refrescante de chá', 'R$ 6.00'),
+('Milkshake', 'Bebida gelada à base de sorvete', 'R$ 10.00'),
+('Energético', 'Bebida estimulante', 'R$ 12.00'),
+('Limonada', 'Suco de limão com água e açúcar', 'R$ 5.00'),
+('Mojito', 'Coquetel de rum com hortelã e limão', 'R$ 18.00'),
+('Gin Tônica', 'Coquetel de gin com água tônica', 'R$ 20.00'),
+('Vodka', 'Bebida alcoólica destilada', 'R$ 22.00');
 
 -- Inserir dados na tabela Ingredientes
-INSERT INTO Ingredientes (Nome, Unidade_medida, ID_prato, ID_bebida) VALUES 
+INSERT INTO Ingredientes (Nome, Unidade_Medida, ID_prato, ID_bebida) VALUES 
 ('Tomate', 'Kg', 1, NULL),
 ('Frango', 'Kg', 2, NULL),
 ('Bacon', 'Kg', 3, NULL),
@@ -317,21 +317,21 @@ INSERT INTO Ingredientes (Nome, Unidade_medida, ID_prato, ID_bebida) VALUES
 
 -- Inserir dados na tabela Pedidos
 INSERT INTO Pedidos (ID_cliente, ID_prato, ID_bebida, Valor, Tipo_pagamento, Endereco, Data_pedido) VALUES 
-(1, 1, 1, 30.90, 'Cartão de Crédito', 'Rua A, 123', '2023-04-01 19:00:00'),
-(2, 2, 2, 29.50, 'Dinheiro', 'Rua B, 456', '2023-04-02 20:00:00'),
-(3, 3, 3, 23.00, 'Cartão de Débito', 'Rua C, 789', '2023-04-03 18:00:00'),
-(4, 4, 4, 38.90, 'Cartão de Crédito', 'Rua D, 101', '2023-04-04 21:00:00'),
-(5, 5, 5, 33.90, 'Dinheiro', 'Rua E, 202', '2023-04-05 19:30:00'),
-(6, 6, 6, 50.00, 'Cartão de Débito', 'Rua F, 303', '2023-04-06 20:30:00'),
-(7, 7, 7, 28.50, 'Cartão de Crédito', 'Rua G, 404', '2023-04-07 18:30:00'),
-(8, 8, 8, 38.00, 'Dinheiro', 'Rua H, 505', '2023-04-08 21:30:00'),
-(9, 9, 9, 47.90, 'Cartão de Débito', 'Rua I, 606', '2023-04-09 19:45:00'),
-(10, 10, 10, 31.50, 'Cartão de Crédito', 'Rua J, 707', '2023-04-10 20:45:00'),
-(11, 11, 11, 24.90, 'Dinheiro', 'Rua K, 808', '2023-04-11 18:15:00'),
-(12, 12, 12, 51.00, 'Cartão de Débito', 'Rua L, 909', '2023-04-12 21:15:00'),
-(13, 13, 13, 52.90, 'Cartão de Crédito', 'Rua M, 101', '2023-04-13 19:15:00'),
-(14, 14, 14, 41.50, 'Dinheiro', 'Rua N, 202', '2023-04-14 20:15:00'),
-(15, 15, 15, 51.00, 'Cartão de Débito', 'Rua O, 303', '2023-04-15 18:45:00');
+(1, 1, 1, 'R$ 30.90', 'Cartão de Crédito', 'Rua A, 123', '2023-04-01 19:00:00'),
+(2, 2, 2, 'R$ 29.50', 'Dinheiro', 'Rua B, 456', '2023-04-02 20:00:00'),
+(3, 3, 3, 'R$ 23.00', 'Cartão de Débito', 'Rua C, 789', '2023-04-03 18:00:00'),
+(4, 4, 4, 'R$ 38.90', 'Cartão de Crédito', 'Rua D, 101', '2023-04-04 21:00:00'),
+(5, 5, 5, 'R$ 33.90', 'Dinheiro', 'Rua E, 202', '2023-04-05 19:30:00'),
+(6, 6, 6, 'R$ 50.00', 'Cartão de Débito', 'Rua F, 303', '2023-04-06 20:30:00'),
+(7, 7, 7, 'R$ 28.50', 'Cartão de Crédito', 'Rua G, 404', '2023-04-07 18:30:00'),
+(8, 8, 8, 'R$ 38.00', 'Dinheiro', 'Rua H, 505', '2023-04-08 21:30:00'),
+(9, 9, 9, 'R$ 47.90', 'Cartão de Débito', 'Rua I, 606', '2023-04-09 19:45:00'),
+(10, 10, 10, 'R$ 31.50', 'Cartão de Crédito', 'Rua J, 707', '2023-04-10 20:45:00'),
+(11, 11, 11, 'R$ 24.90', 'Dinheiro', 'Rua K, 808', '2023-04-11 18:15:00'),
+(12, 12, 12, 'R$ 51.00', 'Cartão de Débito', 'Rua L, 909', '2023-04-12 21:15:00'),
+(13, 13, 13, 'R$ 52.90', 'Cartão de Crédito', 'Rua M, 101', '2023-04-13 19:15:00'),
+(14, 14, 14, 'R$ 41.50', 'Dinheiro', 'Rua N, 202', '2023-04-14 20:15:00'),
+(15, 15, 15, 'R$ 51.00', 'Cartão de Débito', 'Rua O, 303', '2023-04-15 18:45:00');
 
 -- Inserir dados na tabela Entregas
 INSERT INTO Entregas (Endereco, ID_pedido, Data_entrega) VALUES 
